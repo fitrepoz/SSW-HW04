@@ -1,27 +1,24 @@
-import json
 import requests
 
 
-def view_repos(user_input):
+def view_repos(github_id):
 
-    rep = []
-    result = []
-    GitHubID = user_input
-    initial_request = 'https://api.github.com/users/' + GitHubID + '/repos'
-    response = requests.get(initial_request)
-    answer = response.json()
+    get_repo_name = requests.get(f"https://api.github.com/users/{github_id}/repos")
+    r = get_repo_name.json()
+    repo_list = []
 
-    for r in answer:
-        rep.append(r['name'])
+    for i in range(len(r)):
+        repo_list.append(r[i]["name"])
 
-    for k in rep:
-        second_request = 'https://api.github.com/repos/' + GitHubID + '/' + k + '/commits'
-        res = requests.get(second_request)
-        commit_num = res.json()
-        result.append('Repo:' + k + ' Number of commits: ' + str(len(commit_num)))
-    return result
+    commit_dict = {}
+    for n in range(len(repo_list)):
+        get_commits = requests.get(f"https://api.github.com/repos/{github_id}/{repo_list[n]}/commits")
+        re = get_commits.json()
+        commit_dict[repo_list[n]] = len(re)
+        print(f"Repo: {repo_list[n]} Number of commits : {len(re)}")
+
+    return commit_dict
 
 
-if __name__ == '__main__':
-    for item in view_repos('fitrepoz'):
-        print(item)
+if __name__ == "__main__":
+    print(view_repos("fitrepoz"))
