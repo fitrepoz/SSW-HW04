@@ -1,27 +1,26 @@
-import json
 import requests
+import json
 
 
-def view_repos(user_input):
 
-    rep = []
-    result = []
-    GitHubID = user_input
-    initial_request = 'https://api.github.com/users/' + GitHubID + '/repos'
-    response = requests.get(initial_request)
-    answer = response.json()
+def view_github_repos():
+    try:
+        count = dict()
+        username = input("Enter your github username:")
 
-    for r in answer:
-        rep.append(r['name'])
+        url = "https://api.github.com/users/"+username+"/repos"
 
-    for k in rep:
-        second_request = 'https://api.github.com/repos/' + GitHubID + '/' + k + '/commits'
-        res = requests.get(second_request)
-        commit_num = res.json()
-        result.append('Repo:' + k + ' Number of commits: ' + str(len(commit_num)))
-    return result
+        repos = requests.get(url).json()
 
+        for repo in repos:
+            test_url = "https://api.github.com/repos/" + username + "/" + repo['name'] + "/commits"
+            get = requests.get(test_urlf)
+            commit = get.json()
+            count[repo["name"]] = len(commit)
+        for repositories, commits in count.items():
+            print("Repository:", repositories, "Number of Commits:", commits)
+            
+    except TypeError:
+        print("Invalid Username")
 
-if __name__ == '__main__':
-    for item in view_repos('fitrepoz'):
-        print(item)
+    return count
