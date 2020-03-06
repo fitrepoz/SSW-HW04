@@ -10,7 +10,7 @@ class TestHW(unittest.TestCase):
         'Repo:projectxenie Number of commits: 3', 
         'Repo:sastokes.github.io Number of commits: 4', 
         'Repo:sharpdx Number of commits: 2', 
-        'Repo:SSW-567 Number of commits: 10', 
+        'Repo:SSW-567 Number of commits: 30', 
         'Repo:SSW810GHrepo Number of commits: 5', 
         'Repo:SSWTeamD Number of commits: 2'])
 
